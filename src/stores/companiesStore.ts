@@ -25,8 +25,6 @@ export const useCompanies = defineStore("companies",{
     actions:{
         async getAllCompanies(){
             try {
-                console.log("API Base URL:", baseUrl);
-                console.log("API Base URL v",7);
                 const response = await fetch(`${baseUrl}/api/companies/`,{// /
                      method: 'GET',
                     headers: {
