@@ -132,15 +132,15 @@ component
         <tr v-on:click="showAlertEvent($event,item)" id="openModal" :class="{  'text-cyan-300 hover:bg-cyan-950': isDarkMode,'text-black hover:bg-blue-50': !isDarkMode }" class="border-b border-stone-200 last:border-0 " v-for="(item, index) in calc.companiesData" :key="index" >
           <td><p class="p-3">{{ item.Info.ticker }}</p></td>
 
-          <td><p class="p-3">{{ parserNumbers(item.rating_points) }}</p></td>
+          <td><p class="p-3">{{ ratingPointsInvest(item.rating_points) }}</p></td>
 
           <td><p class="p-3">{{ item.Info.company }}</p></td>
 
-          <td><p class="p-3">{{ item.action_points }}</p></td>
+          <td><p class="p-3">{{ actionInvet(item.action_points) }}</p></td>
 
           <td><p class="p-3">{{ item.Info.brokerage }}</p></td>
 
-          <td><p class="p-3">{{ item.target_points }}</p></td>
+          <td><p class="p-3">{{ targetPointsInvest(item.target_points) }}</p></td>
           
           <td><p class="p-3">{{ formatDate(item.Info.time)  }}</p></td>          
         </tr>
@@ -357,8 +357,31 @@ function gobalSorter(post:any,item:any,orderType:any,a:any,b:any){
         }
         return 0
       }
-
-//////////////// PAGEABLE CONTENT
+//////////////// DESCRIPTIONS
+function actionInvet(item:number) {
+    if(item == 3)return "EXCELENTE RENTABILIDAD"
+    if(item == 2)return "MUY RENTABLE"
+    if(item == 1.5)return "RENTABLE"
+    if(item == 0)return "NEUTRAL"
+    if(item == -1)return "PERDIDA"
+    if(item == -2)return "GRAN PERDIDA"
+}
+function ratingPointsInvest(item:number) {
+    if(item >= 3 && item < 6)return "ES BAJO EL RATING"
+    if(item >= 6 && item  < 9)return "ES MEDIANAMENTE BAJO EL RATING"
+    if(item >= 9 && item  < 13)return "ES NEUTRO EL RATING"
+    if(item >= 13 && item < 15)return "ES MEDIANAMENTE ALTO EL RATING"
+    if(item >= 15 && item < 24)return "ES ALTO EL RATING"
+    if(item >= 24 && item < 26)return "ES MUY ALTO EL RATING"
+    if(item >= 26 )return "ES EL MEJOR RATING"
+}
+function targetPointsInvest(item:number) {
+  if (item > 0 ) return "PRECIO OBJETIVO AUMENTÓ"
+  if (item == 0) return "PRECIO OBJETIVO NO CAMBIA"
+  if (item < 0 ) return "PRECIO OBJETIVO DISMINUYÓ"
+  
+}
+//////////////// TODO PAGEABLE CONTENT [comming soon]
 /*
 let currentPage = ref<number>(1);
 let dataRange = 5;

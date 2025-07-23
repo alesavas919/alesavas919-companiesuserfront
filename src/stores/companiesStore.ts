@@ -1,22 +1,6 @@
 import { defineStore } from "pinia";
 import type companyInterface from "../model/interfaceModel";
 import type companiesCalInterface  from '../model/interfaceModel';
-//let urlBase = import.meta.env.VITE_INDEX_API_URL;
-//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-/*
-import axios from 'axios';
-export const api = axios.create({
-  baseURL: "/",  // URL base de la API
-  timeout: 5000,    // Tiempo de espera de la solicitud (5 segundos)
-  withCredentials: false,
-  headers: {
-    'Content-Type':                 'application/json',
-    'Access-Control-Allow-Origin':  '*',
-    //'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-    //'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-  },
-})
-*/
 const baseUrl = import.meta.env.VITE_INDEX_API_URL;
 export const useCompanies = defineStore("companies",{
     state:()=>({
@@ -25,7 +9,7 @@ export const useCompanies = defineStore("companies",{
     actions:{
         async getAllCompanies(){
             try {
-                const response = await fetch(`${baseUrl}/api/companies/`,{// /
+                const response = await fetch(`${baseUrl}/api/companies`,{// / & ${baseUrl}
                      method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
@@ -34,7 +18,6 @@ export const useCompanies = defineStore("companies",{
                 const contentType = response.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')){
                     const text = await response.text();
-                    console.log("API Base URL:", text);
                     throw new Error(`Respuesta inválida: ${text.substring(0, 50)}...`)
                 }
                 this.companiesData = await response.json();
@@ -52,7 +35,7 @@ export const useCalculate = defineStore("calculate",{
     actions:{
         async getCalcCompanies(){
             try {
-                const response = await fetch(`${baseUrl}/api/calculate/`);// /
+                const response = await fetch(`${baseUrl}/api/calculate/`);// /${baseUrl}
                 this.companiesData = await response.json();
             } catch (e) {
                 console.error("Error fetching data: "+e);
