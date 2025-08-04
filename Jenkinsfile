@@ -11,11 +11,9 @@ pipeline{
         script{
           def result = sh(returnStatus: true, script: './startbuild.sh')
           if (result != 0) {
-            echo "Error al ejecutar el script"
+            echo "Script Exec Error..."
           }
         }
-        sh 'chmod +x ./startbuild.sh'
-        sh './startbuild.sh'
       }
     }
 
