@@ -8,6 +8,14 @@ pipeline{
         echo 'Start build'
         sh 'ls'
         echo 'Build success'
+        script{
+          def result = sh(returnStatus: true, script: './startbuild.sh')
+          if (result != 0) {
+            echo "Error al ejecutar el script"
+          }
+        }
+        sh 'chmod +x ./startbuild.sh'
+        sh './startbuild.sh'
       }
     }
 
