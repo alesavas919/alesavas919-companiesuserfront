@@ -10,8 +10,8 @@ pipeline{
         withCredentials([
             usernamePassword(credentialsId: 'ctestus', usernameVariable: 'THEUSER', passwordVariable: 'THEPASSWORD')
         ]) {
-            sh 'echo "User: $THEUSUARIO, Password: $THEPASSWORD"'
-        }
+            sh 'echo "User: ${  }, Password: ${THEPASSWORD}"'
+        } 
         script{
           def result = sh(returnStatus: true, script: './dockerbuild.sh')
           if (result != 0) {
