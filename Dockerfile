@@ -54,7 +54,7 @@ COPY . .
 RUN npm run build
 
 # Create server nginx
-FROM nginx:1.29.0-perl as production-stage
+FROM nginx:stable-bookworm as production-stage
 #FROM nginx:1.13.12-alpine as production-stage
 
 # Start server
