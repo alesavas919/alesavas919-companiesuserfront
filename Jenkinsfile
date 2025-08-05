@@ -9,7 +9,6 @@ pipeline{
         sh 'ls'
         echo 'Build success'
         script{
-          sh 'chmod +x startbuild.sh'
           def result = sh(returnStatus: true, script: './startbuild.sh')
           if (result != 0) {
               error "Script falló con código ${result}"
