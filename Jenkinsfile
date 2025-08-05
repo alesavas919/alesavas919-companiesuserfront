@@ -9,9 +9,12 @@ pipeline{
         sh 'ls'
         echo 'Build success'
         script{
+          sh 'chmod +x startbuild.sh'
           def result = sh(returnStatus: true, script: './startbuild.sh')
           if (result != 0) {
-            echo "Script Exec Error..."
+              error "Script falló con código ${result}"
+          } else {
+              echo 'Build success'
           }
         }
       }
@@ -19,7 +22,7 @@ pipeline{
 
     stage("test"){
       steps{
-        echo 'testing the application'        
+        echo 'testing the application'
       }
     }
 
