@@ -3,13 +3,17 @@ pipeline{
   agent any
   
   stages {
-    stage("build"){
+    stage("docker build"){
       steps{
         echo 'Start build'
         sh 'ls'
-        echo 'Build success'
+        withCredentials([
+            usernamePassword(credentialsId: 'ctestus', usernameVariable: 'THEUSER', passwordVariable: 'THEPASSWORD')
+        ]) {
+            sh 'echo "User: $THEUSUARIO, Password: $THEPASSWORD"'
+        }
         script{
-          def result = sh(returnStatus: true, script: './startbuild.sh')
+          def result = sh(returnStatus: true, script: './dockerbuild.sh')
           if (result != 0) {
               error "Script falló con código ${result}"
           } else {
@@ -19,9 +23,19 @@ pipeline{
       }
     }
 
-    stage("test"){
+    stage("aws build"){
       steps{
-        echo 'testing the application'
+        echo 'Start build'
+        sh 'ls'
+        echo 'Build success'
+        script{
+          def result = sh(returnStatus: true, script: './awsbuild.sh')
+          if (result != 0) {
+              error "Script falló con código ${result}"
+          } else {
+              echo 'Build success'
+          }
+        }
       }
     }
 
